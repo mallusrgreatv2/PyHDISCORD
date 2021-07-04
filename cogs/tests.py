@@ -9,10 +9,11 @@ class Tests(Cog):
 
     @commands.Cog.listener()
     async def on_ready(self):
-        print("[  Tests Cog Loaded  ]")
+        print(f"[  {self.__class__.__name__} Cog Loaded  ]")
 
     @commands.command()
     async def button(self, ctx: commands.Context):
+        """Buttons Testing!"""
         await ctx.send("Here is your button", components= [
             Button(label="Click", style = 1),
             Button(label="Disabled", disabled=True)
@@ -22,6 +23,9 @@ class Tests(Cog):
 
     @commands.command()
     async def select(self, ctx: commands.Context):
+        """
+        Selection Menu Testing!
+        """
         await ctx.send('Here, select whatever you want', components = [
             Select(
                 placeholder="Here!!!",

@@ -7,9 +7,10 @@ class Events(commands.Cog):
     
     @commands.Cog.listener()
     async def on_ready(self):
-        print("---Events Cog Ready ||| Bot Ready---")
+        print(f"[  {self.client.user.name}#{self.client.user.discriminator} is online  ]")
         DiscordComponents(self.client)
         await self.client.change_presence(activity=discord.Game("games"))
+        print(f"[  {self.__class__.__name__} Cog Loaded  ]")
 
 def setup(client):
     client.add_cog(Events(client))
