@@ -18,7 +18,7 @@ class Tests(Cog):
             Button(label="Disabled", disabled=True)
         ])
         interaction = await self.client.wait_for("button_click", check=lambda i: i.component.label.startswith("Click"))
-        await interaction.respond("hey")
+        await interaction.channel.send("Works lol")
 
     @commands.command()
     async def select(self, ctx: commands.Context):
@@ -35,19 +35,7 @@ class Tests(Cog):
         ])
 
         interaction = await self.client.wait_for("select_option")
-        await interaction.respond(content=f"{interaction.component[0].label} is it!")
-    @commands.command()
-    async def help(self, ctx: commands.Context, cmd = None):
-        cmds = commands.commands
-        embed = discord.Embed(title = "Commands")
-        if cmd is None:
-            for x in cmds:
-                embed.add_field(name=x.name, value=x.description, inline=False)
-        else:
-            Com = self.client.get_commands().count(cmd)
-            embed.add_field(Com.name, Com.description)
-        await ctx.send(embed)
-        
+        await interaction.respond(content=f"{interaction.component[0].label} is it!")        
 
 def setup(client):
     client.add_cog(Tests(client))
