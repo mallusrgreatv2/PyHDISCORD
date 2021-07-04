@@ -1,6 +1,6 @@
 import discord
 from discord.ext import commands
-from discord.ext.commands import Cog
+from discord.ext.commands import Cog, Bot
 from discord_components import Button
 from discord_components.component import Select, SelectOption
 class Tests(Cog):
@@ -36,7 +36,18 @@ class Tests(Cog):
 
         interaction = await self.client.wait_for("select_option")
         await interaction.respond(content=f"{interaction.component[0].label} is it!")
-
+    @commands.command()
+    async def help(self, ctx: commands.Context, cmd = None):
+        cmds = commands.commands
+        embed = discord.Embed(title = "Commands")
+        if cmd is None:
+            for x in cmds:
+                embed.add_field(name=x.name, value=x.description, inline=False)
+        else:
+            Com = self.client.get_commands().count(cmd)
+            embed.add_field(Com.name, Com.description)
+        await ctx.send(embed)
+        
 
 def setup(client):
     client.add_cog(Tests(client))

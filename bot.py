@@ -10,7 +10,7 @@ client.slash = slash
 @slash.slash(name = "ping", guild_ids=[853316413649190912], description="Bot's latency")
 async def ping(ctx):
     await ctx.send("Pong! {}".format(str(round(client.latency))+"ms"))
-
+client.remove_command("help")
 for filename in os.listdir('cogs'):
     if filename.endswith(".py"):
         client.load_extension(f'cogs.{filename[:-3]}')
