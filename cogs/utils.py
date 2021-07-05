@@ -74,11 +74,11 @@ class Utils(commands.Cog):
     async def on_ready(self):
         print(f"[  {self.__class__.__name__} Cog Loaded  ]")
     
-    
+    @commands.cooldown(rate=1, per=3,type=BucketType.user)
     @commands.command(
         name="help", aliases=["h", "commands"], description="The help command!"
     )
-    @commands.cooldown(rate=3, per=1,type=BucketType.member)
+    
     async def help_command(self, ctx, *, cogOrCommand=None):
         """
         All the commands or cog commands or command information
@@ -98,6 +98,7 @@ class Utils(commands.Cog):
 
                 else:
                     await ctx.send("Entity not found.")
+
 
                     
 def setup(client):
