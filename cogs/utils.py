@@ -2,6 +2,22 @@ from discord.ext.commands.cooldowns import BucketType
 from utils.paginator import Pag
 import discord
 from discord.ext import commands
+from pistonapi import PistonAPI
+from datetime import datetime
+import a,asyncio,os
+from discord import Embed,Color
+versions={"javascript":"15.10.0"
+ , "python":"3.9","bash":"5.1.0",'brainfuck':'2.7.3','cjam':'0.6.5','clojure':'1.10.3','cobol':'3.1.2','coffeescript':'2.5.1',
+  'cow':'1.0.0','crystal':'0.36.1','dart':'2.12.1','dash':'0.5.11','deno':'1.7.5','dotnet':'5.0.201','dragon':'1.9.8',
+  'elixir':'1.11.3','emacs':'27.1.0','erlang':'23.0.0','gawk':'5.1.0','gcc':'10.2.0','go':'1.16.2','golfscript':'1.0.0',
+  'groovy':'3.0.7','haskell':'9.0.1','java':'15.0.2','jelly':'0.1.31','kotlin':'1.4.31','lisp':'2.1.2','lolcode':'0.11.2',
+  'lua':'5.4.2','mono':'6.12.0','nasm':'2.15.5','nim':'1.4.4','node':'16.3.0','ocaml':'4.12.0','octave':'6.2.0',
+  'osabie':'1.0.1','paradoc':'0.6.0','pascal':'3.2.0','perl':'5.26.1','php':'8.0.2','ponylang':'0.39.0','prolog':'8.2.4',
+  'pure':'0.68.0','pyth':'1.0.0','raku':'6.100.0','rockstar':'1.0.0','rust':'1.50.0','scala':'3.0.0','swift':'5.3.3',
+  'typescript':'4.2.3','vlang':'0.1.13','yeethon':'3.10.0','ruby':'3.0.1',"julia":"1.6.1"
+  }
+
+piston = PistonAPI()
 
 class Utils(commands.Cog):
     def __init__(self, client) -> None:
@@ -99,6 +115,48 @@ class Utils(commands.Cog):
                 else:
                     await ctx.send("Entity not found.")
 
+    @commands.command(
+        name="code",
+        description="run code in different languages",
+        aliases=['run']
+    )
+    async def code(self, ctx: commands.Context, language: str="python", *, code: str="print(\"Why didn't u put any codes?!\")"):
+        msg= await ctx.send("Executing...")
+        try:
+            #await asyncio.sleep(0.33)
+            language = language.lower()
+            version = versions[language]
+            code = code.replace("```","")
+        # await msg.edit(embed=load[1])
+        # await asyncio.sleep(0.33)
+            start = datetime.now()
+            output =str(piston.execute(language=language, version=version,code=code))
+            taken = datetime.now() - start #taken =  taken.total_secs()*1000
+            taken = str(taken)
+            taken = taken.replace("0:00:",'')
+            #await msg.edit(embed=load[2])
+            #await asyncio.sleep(0.33)
+            if "/piston/" in output and "file0.code" in output:
+                output =  output.replace('file0.code:','lol.html:in Line ')
+                em = Embed(title="Critical Error", description=f"{output}",color=Color.red())
+            
+                em.set_footer(text=f"Time Taken: {taken} s")
+            # await msg.edit(embed=load[0])
+            # await asyncio.sleep(0.1)
+            # await msg.edit(embed=load[1])
+            # await msg.edit(embed=load[2])
+                await msg.edit(embed=em)
+                await msg.add_reaction("❌")
+            
+            else:
+                em = Embed(title="Code Output:", description=f"{output}",color=0x00ff00)
+            
+                em.set_footer(text=f'{language} v{version} || Time Taken : {taken} s')
+                await msg.edit(embed=em)
+                await msg.add_reaction("✅")
+        except Exception as e:
+            await msg.edit(embed=Embed(title="Error", description=f"{e}"))
+        
 
                     
 def setup(client):

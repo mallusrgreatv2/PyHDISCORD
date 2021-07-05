@@ -4,6 +4,7 @@ from discord.ext import commands
 from discord_components import *
 import json
 from utils.prettyconcat import pretty_concat
+import datetime, time
 
 class Events(commands.Cog):
     def __init__(self, client) -> None:
@@ -20,7 +21,7 @@ class Events(commands.Cog):
     @commands.Cog.listener()
     async def on_ready(self):
         DiscordComponents(self.client)
-        print(f"[  {self.__class__.__name__} Cog Loaded  ]")
+        print(f"[  {self.__class__.__name__} Cog Loaded  ]")    
 
     @commands.Cog.listener()
     async def on_command_error(self, ctx, err):

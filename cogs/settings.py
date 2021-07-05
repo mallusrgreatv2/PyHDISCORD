@@ -1,6 +1,7 @@
 import os
 import sys
 import discord
+import datetime, time
 from discord.ext import commands
 from discord.ext.commands.core import command
 class Settings(commands.Cog):
@@ -13,11 +14,13 @@ class Settings(commands.Cog):
 
     @commands.command()
     async def info(self, ctx):
+        """Get information about the bot"""
+        uptime = str(datetime.timedelta(seconds=int(round(time.time()-self.client.startTime))))
         library = f"{discord.__name__}.py {discord.__version__}"
         servers = len(set(self.client.guilds))
         users = len(set(self.client.get_all_members()))
         commands = len(set(self.client.commands))
-        embed = discord.Embed(title = "Information", description = f"```fix\nLibrary: {library}\nServers: {servers}\nUsers: {users}\nCommands: {commands}\n```")
+        embed = discord.Embed(title = "Information", description = f"```fix\nLibrary: {library}\nServers: {servers}\nUsers: {users}\nCommands: {commands}\nUptime: {uptime}\n```")
         await ctx.message.reply(embed=embed)
         
 def setup(c):
