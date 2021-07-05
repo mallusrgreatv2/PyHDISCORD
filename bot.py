@@ -7,17 +7,11 @@ from random import choice
 import discord_slash # pip install discord-py-slash-command
 from dotenv import load_dotenv # pip install python-dotenv
 from discord_slash import SlashCommand # pip install discord-py-slash-command
-import json
 # load the .env file
 load_dotenv()
 # statuses wee
 
 status = ['devs coding me', 'pretty funny', 'moosik!!!']
-def get_prefix(client, message):
-    with open('dicts/prefixes.json', 'r') as f:
-        prefixes = json.load(f)
-
-    return prefixes[str(message.guild.id)]
 client = commands.Bot(command_prefix="??", description="made for zey nd mlsrgrt to learn dpy")
 # setup slash commands
 slash = SlashCommand(client, sync_commands=True)
