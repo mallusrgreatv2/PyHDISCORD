@@ -1,7 +1,7 @@
 # imports
-from discord.ext import tasks # pip install discord
-import discord # pip install discord
-from discord.ext import commands # pip install discord
+from discord.ext import tasks # pip install discord.py
+import discord # pip install discord.py
+from discord.ext import commands # pip install discord.py
 import os
 from random import choice
 import discord_slash # pip install discord-py-slash-command
