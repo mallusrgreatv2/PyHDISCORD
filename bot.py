@@ -1,12 +1,12 @@
 # imports
-from discord.ext import tasks
-import discord
-from discord.ext import commands
+from discord.ext import tasks # pip install discord
+import discord # pip install discord
+from discord.ext import commands # pip install discord
 import os
 from random import choice
-import discord_slash
-from dotenv import load_dotenv
-from discord_slash import SlashCommand
+import discord_slash # pip install discord-py-slash-command
+from dotenv import load_dotenv # pip install python-dotenv
+from discord_slash import SlashCommand # pip install discord-py-slash-command
 import json
 # load the .env file
 load_dotenv()
