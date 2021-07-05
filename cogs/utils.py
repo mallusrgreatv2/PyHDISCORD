@@ -1,3 +1,4 @@
+from discord.ext.commands.cooldowns import BucketType
 from utils.paginator import Pag
 import discord
 from discord.ext import commands
@@ -35,7 +36,7 @@ class Utils(commands.Cog):
         return sorted(commandList, key=lambda x: x.name)
 
     async def setup_help_pag(self, ctx, entity=None, title=None):
-        entity = entity or self.bot
+        entity = entity or self.client
         title = title or self.client.description
 
         pages = []
@@ -73,15 +74,17 @@ class Utils(commands.Cog):
     async def on_ready(self):
         print(f"[  {self.__class__.__name__} Cog Loaded  ]")
     
+    
     @commands.command(
         name="help", aliases=["h", "commands"], description="The help command!"
     )
+    @commands.cooldown(rate=3, per=1,type=BucketType.member)
     async def help_command(self, ctx, *, cogOrCommand=None):
         """
         All the commands or cog commands or command information
         """
         if not cogOrCommand:
-            await self.setup_help_pag(ctx)
+            await self.setup_help_pag(ctx, title="PyH")
 
         else:
             cog = self.client.get_cog(cogOrCommand)
