@@ -70,6 +70,22 @@ class Mod(commands.Cog):
         else:
             await ctx.message.reply("Invalid command. Choose one of these: `pinned, bots, members, my`")
 
+    @commands.command(
+        name = "role"
+    )
+    @commands.has_permissions(manage_roles=True)
+    @commands.bot_has_permissions(manage_roles=True)
+    async def role(self, ctx, member: commands.MemberConverter, role: commands.RoleConverter):
+        member: discord.Member = member
+        for i in member.roles:
+            if role.id == i.id:
+                await member.remove_roles(role)
+                await ctx.message.reply(f"Removed {role.name} from {member.display_name}")
+                break
+        else:
+            await member.add_roles(role)
+            await ctx.message.reply(f"Gave {role.name} to {member.display_name}")
+
 
 def setup(client):
     client.add_cog(Mod(client))

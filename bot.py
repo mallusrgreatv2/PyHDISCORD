@@ -3,6 +3,7 @@ from discord.ext import tasks # pip install discord.py
 import discord # pip install discord.py
 from discord.ext import commands # pip install discord.py
 import os
+import alexflipnote
 from random import choice
 import discord_slash # pip install discord-py-slash-command
 from dotenv import load_dotenv # pip install python-dotenv
@@ -16,9 +17,12 @@ status = ['devs coding me', 'pretty funny', 'moosik!!!']
 client = commands.Bot(command_prefix="??", description="made for zey nd mlsrgrt to learn dpy")
 # setup slash commands
 slash = SlashCommand(client, sync_commands=True)
+# other stuff
+client.alex = os.getenv('alex')
+def alex():
+    return client.alex
 
 client.remove_command("help")
-
 # on_ready
 @client.event
 async def on_ready():

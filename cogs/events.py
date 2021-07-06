@@ -71,6 +71,7 @@ class Events(commands.Cog):
 
         with open('dicts/prefixes.json', 'w') as f:
             json.dump(prefixes, f, indent=4)
+    
 
 def setup(client):
     client.add_cog(Events(client))
