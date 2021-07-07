@@ -7,6 +7,16 @@ import traceback
 class Owner(commands.Cog):
     def __init__(self, client) -> None:
         self.client: commands.Bot = client
+        self.bot: commands.Bot = client
+
+    def cleanup_code(self, content):
+        """Automatically removes code blocks from the code."""
+        # remove ```py\n```
+        if content.startswith('```') and content.endswith('```'):
+            return '\n'.join(content.split('\n')[1:-1])
+
+        # remove `foo`
+        return content.strip('` \n')
 
     @commands.command(pass_context=True, hidden=True, name='eval')
     @commands.is_owner()
@@ -20,7 +30,6 @@ class Owner(commands.Cog):
             'author': ctx.author,
             'guild': ctx.guild,
             'message': ctx.message,
-            '_': self._last_result
         }
 
         env.update(globals())
@@ -53,7 +62,6 @@ class Owner(commands.Cog):
                 if value:
                     await ctx.send(f'```py\n{value}\n```')
             else:
-                self._last_result = ret
                 await ctx.send(f'```py\n{value}{ret}\n```')
 
     @commands.group(name="cogs", hidden=True, invoke_without_command=True)
