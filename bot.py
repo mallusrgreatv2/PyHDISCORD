@@ -14,7 +14,7 @@ load_dotenv()
 import time
 
 status = ['devs coding me', 'pretty funny', 'moosik!!!']
-client = commands.Bot(command_prefix="??", description="made for zey nd mlsrgrt to learn dpy")
+client = commands.Bot(command_prefix="??", description="made for zey nd mlsrgrt to learn dpy", owner_id=700397009336533032)
 # setup slash commands
 slash = SlashCommand(client, sync_commands=True)
 # other stuff
